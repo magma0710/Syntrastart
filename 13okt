@@ -1,0 +1,39 @@
+# opdracht 1:
+# Vraag de gebruiker om woorden in te geven ("Stop" stopt).
+# Geef na elk woord feedback of het woord al eens gegeven is.
+
+words = []  # lijst om ingegeven woorden te bewaren
+
+while True:
+    word = input("Geef een woord: ")
+
+    if word == 'Stop':
+        break  # stopt de lus als gebruiker 'Stop' typt
+
+    if word in words:
+        print("Woord is al gegeven")
+    else:
+        print("Nieuw woord toegevoegd")
+        words.append(word)
+
+
+python_group = [
+    ("Alice", "v", "student"),
+    ("Bob", "m", "teacher"),
+    ("Sophie", "v", "student"),
+    ("Mark", "m", "student"),
+]
+
+# Task 2: print all women
+print("All women in the python_group:")
+for name, sex, type_ in python_group:
+    if sex == 'v':
+        print(name)
+
+# Task 3: make a list of all men’s names
+men_names = [name for name, sex, type_ in python_group if sex == 'm']
+print("\nList of all men:", men_names)
+
+# Task 4: count number of women
+count_women = sum(1 for name, sex, type_ in python_group if sex == 'v')
+print(f"\nNumber of women in python_group: {count_women}")
