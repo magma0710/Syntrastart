@@ -269,9 +269,10 @@ def main():
             print("8) Print score distribution")
             print("9) Export movies without relevant score to CSV")
             print("10) Stop program")
+            print("11) Print all movies between 1/4/2000 and 1/4/2005; shorter than 120 minutes")
             print("=" * 50)
 
-            choice = input("Enter your choice (1-10): ").strip()
+            choice = input("Enter your choice (1-11): ").strip()
 
             if choice == "1":
                 print_number_of_movies(movies)
@@ -294,8 +295,10 @@ def main():
             elif choice == "10":
                 print("Goodbye!")
                 break
+            elif choice == "11":
+                option_11_filter_movies(movies)
             else:
-                print("Invalid choice. Please enter a number between 1 and 10.")
+                print("Invalid choice. Please enter a number between 1 and 11.")
 
     except FileNotFoundError as e:
         print(f"Error: {e}")
@@ -303,6 +306,30 @@ def main():
     except Exception as e:
         print(f"Unexpected error: {e}")
 
+# Alle films uitgebracht tussen 1/4/2000 en 1/4/2005 korter dan 120 minuten.
+from datetime import datetime
+
+def option_11_filter_movies(movies):
+    start_date = datetime(2000, 4, 1)
+    end_date = datetime(2005, 4, 1)
+
+    print("\n--- Option 11: Movies released between 1/4/2000 and 1/4/2005 shorter than 120 minutes ---")
+
+    found = False
+    for movie in movies:
+
+        # release_date may already be a datetime object
+        if isinstance(movie.release_date, datetime):
+            release = movie.release_date
+        else:
+            release = datetime.strptime(movie.release_date, "%Y-%m-%d")
+
+        if start_date <= release <= end_date and movie.length < 120:
+            print(f"- {movie.title} ({movie.length} min, {release.date()})")
+            found = True
+
+    if not found:
+        print("No movies found that match these criteria.")
 
 if __name__ == "__main__":
     main()
